@@ -1,4 +1,4 @@
-# RSA
+# RSA: An asymmetric key exchange
 
 RSA is perhaps the most widely known asymmetric algorithm. RSA is a public key method developed in 1977 by three mathematicians, Ron Rivest, Adi Shamir, and Len Adleman. In 1973, Clifford Cocks had developed a similar system.
 
