@@ -18,5 +18,7 @@ pycparser==2.21
     # via cffi
 pycryptodome==3.17
     # via rsarmageddon
+pycryptodomex==3.17
+    # via -r requirements.in
 rsarmageddon==2.1.1
     # via -r requirements.in
