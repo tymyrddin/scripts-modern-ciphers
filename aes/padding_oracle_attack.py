@@ -23,7 +23,6 @@ def main() -> None:
 
 # Adds padding to the plain text to make it a multiple of 16 bytes
 def pad(message: bytes) -> bytes:
-    # PKCS #5 (or #7) with padding
     padding_length = BLOCKSIZE - len(message) % BLOCKSIZE
     padding = (chr(padding_length) * padding_length).encode()
     return bytearray(message + padding)
@@ -31,8 +30,6 @@ def pad(message: bytes) -> bytes:
 
 # Function to remove PKCS5 or PKCS5 padding, if exists
 def unpad(message: bytes) -> bytes:
-    # PKCS #5 (or #7) Remove padding (except for dropping
-    # strings not conforming to the standard)
     padding_length = message[-1]
     if not 1 <= padding_length <= BLOCKSIZE:
         raise
