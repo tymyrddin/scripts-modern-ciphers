@@ -12,13 +12,10 @@ def main() -> None:
     options = get_args()
 
     try:
-        iv = b64decode(options.iv)
-        ciphertext = b64decode(options.ciphertext)
-        key = b64decode(options.key)
-        cipher = AES.new(key, AES.MODE_CBC, iv)
-        padded_plaintext = cipher.decrypt(ciphertext)
-        plaintext = unpad(padded_plaintext, AES.block_size)
-        print("Original message was: ", plaintext.decode("utf8"))
+        plaintext = decrypt(
+            b64decode(options.key), b64decode(options.ciphertext), b64decode(options.iv)
+        )
+        print(f"Original message was: {plaintext.decode('utf8')}")
     except (ValueError, KeyError):
         print("ERROR!")
 
@@ -57,16 +54,32 @@ def get_args():
     return values
 
 
-def unpad(message: bytes, blocksize: int) -> bytes:
-    # PKCS #5 (or #7) Remove padding (except for dropping
-    # strings not conforming to the standard)
-    padding_length = message[-1]
-    if not 1 <= padding_length <= blocksize:
-        raise
-    for i in range(padding_length):
-        if message[-i - 1] != padding_length:
-            raise
-    return message[:-padding_length]
+# Function to verify if the bytestream ends with
+# a suffix of X times 'X' (PKCS7)
+def validate_padding(padded_text: bytes) -> bool:
+    for i in range(1, 17):  # find padding
+        if bytes([padded_text[-1]]) == bytes([i]):
+            for j in range(1, i + 1):  # check padding
+                if bytes([padded_text[-j]]) != bytes([i]):
+                    return False
+            return True
+    return False
+
+
+# Function to remove PKCS5 or PKCS5 padding, if exists
+def unpad(message: bytes) -> bytes | None:
+    if validate_padding(message):
+        padding_length = message[-1]
+        return message[:-padding_length]
+    return None
+
+
+# Decrypt a ciphertext with a key and iv in AES CBC mode
+def decrypt(key: bytes, ciphertext: bytes, iv: bytes) -> bytes:
+    cipher = AES.new(key, AES.MODE_CBC, iv)
+    padded_plaintext = cipher.decrypt(ciphertext)
+    plaintext = unpad(padded_plaintext)
+    return plaintext
 
 
 if __name__ == "__main__":

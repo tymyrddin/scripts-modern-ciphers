@@ -11,16 +11,12 @@ from Cryptodome.Random import get_random_bytes
 def main() -> None:
     # Get and parse the arguments
     options = get_args()
-
-    cleartext_bytes = options.plaintext.encode("utf-8")
-
     key = get_random_bytes(options.keysize)  # must be 16, 24 or 32 bytes long
-    cipher = AES.new(key, AES.MODE_CBC)
-    padded_cleartext = pad(cleartext_bytes, AES.block_size)
-    ciphertext = cipher.encrypt(padded_cleartext)
 
-    print(f"iv: {b64encode(cipher.iv).decode('utf-8')}")
-    print(f"ciphertext: {b64encode(ciphertext).decode('utf-8')}")
+    ciphertext = encrypt(key, options.plaintext.encode("utf-8"))
+
+    print(f"iv: {b64encode(ciphertext[1]).decode('utf-8')}")
+    print(f"ciphertext: {b64encode(ciphertext[0]).decode('utf-8')}")
     print(f"key: {b64encode(key).decode('utf-8')}")
 
 
@@ -58,6 +54,15 @@ def pad(message: bytes, blocksize: int) -> bytes:
     padding_length = blocksize - len(message) % blocksize
     padding = (chr(padding_length) * padding_length).encode()
     return bytearray(message + padding)
+
+
+# Encrypt a plaintext with a key in AES CBC mode
+def encrypt(key: bytes, plaintext: bytes) -> tuple[bytes, bytes]:
+    cipher = AES.new(key, AES.MODE_CBC)
+    padded_plaintext = pad(plaintext, AES.block_size)
+    ciphertext = cipher.encrypt(padded_plaintext)
+    iv = cipher.iv
+    return ciphertext, iv
 
 
 if __name__ == "__main__":
