@@ -22,3 +22,6 @@ pycryptodomex==3.17
     # via -r requirements.in
 rsarmageddon==2.1.1
     # via -r requirements.in
+
+numpy~=1.24.2
+pylfsr~=1.0.7
