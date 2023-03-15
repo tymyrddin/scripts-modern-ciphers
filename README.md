@@ -4,6 +4,7 @@ Modern algorithms used in digital technology, e.g. block ciphers, public key cry
 
 * [AES](/aes)
 * [RSA](/rsa)
+* [LFSR](/lfsr)
 
 ----
 
