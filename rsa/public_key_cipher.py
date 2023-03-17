@@ -1,7 +1,7 @@
 # Public Key Cipher
 # https://www.nostarch.com/crackingcodes/ (BSD Licensed)
 # Python naming conventions
-# added type hints
+# Added type hints
 
 import math
 import sys
@@ -60,13 +60,15 @@ def get_blocks_from_text(message: str, blocksize: int) -> list[int]:
     return block_ints
 
 
-def get_text_from_blocks(block_ints: list[int], message_length: int, blocksize: int) -> str:
+def get_text_from_blocks(
+    block_ints: list[int], message_length: int, blocksize: int
+) -> str:
     # Converts a list of block integers to the original message string.
     # The original message length is needed to properly convert the last
     # block integer.
-    message = []
+    message: list[str] = []
     for block_int in block_ints:
-        block_message = []
+        block_message: list[str] = []
         for i in range(blocksize - 1, -1, -1):
             if len(message) + i < message_length:
                 # Decode the message string for the 128 (or whatever

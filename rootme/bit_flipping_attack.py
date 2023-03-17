@@ -2,9 +2,7 @@
 
 import base64
 
-token = (
-    "yourtoken"
-)
+token = "yourtoken"
 t = base64.b64decode(token)  # len : 112
 for i in t:
     print(hex(i), end=" ")

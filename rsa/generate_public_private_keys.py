@@ -9,14 +9,14 @@ import cryptomath
 import prime_numbers
 
 
-def main():
+def main() -> None:
     # Create a public/private keypair with 1024-bit keys:
     print("Making key files...")
     create_key_files("al_sweigart", 1024)
     print("Key files made.")
 
 
-def generate_key(keysize):
+def generate_key(keysize: int) -> tuple[tuple[int, int], tuple[int, int]]:
     # Creates a public/private keys keysize bits in size.
     p = 0
     q = 0
@@ -31,7 +31,7 @@ def generate_key(keysize):
     print("Generating e that is relatively prime to (p-1)*(q-1)...")
     while True:
         # Keep trying random numbers for e until one is valid:
-        e = random.randrange(2 ** (keysize - 1), 2 ** keysize)
+        e = random.randrange(2 ** (keysize - 1), 2**keysize)
         if cryptomath.gcd(e, (p - 1) * (q - 1)) == 1:
             break
 
@@ -48,7 +48,7 @@ def generate_key(keysize):
     return public_key, private_key
 
 
-def create_key_files(name, key_size):
+def create_key_files(name: str, key_size: int) -> None:
     # Creates two files 'x_pubkey.txt' and 'x_privkey.txt' (where x
     # is the value in name) with the n,e and d,e integers written in
     # them, delimited by a comma.

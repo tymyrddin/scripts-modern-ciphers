@@ -3,24 +3,26 @@
 import numpy as np
 import copy
 
+from numpy import dtype
+
 
 def main() -> None:
-    cipher = [1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0]
+    cipher = [1, 1, 0, 0, 1, 0, 1, 0]  # comma separated
     results = berlekamp_massey(cipher)
     print(f"Minimal LFSR: {results[0]}")
     print(f"Minimal polynomial: {results[1]}")
 
 
 # Find the minimal LFSR and minimal polynomial to generate the data
-def berlekamp_massey(data: list[int]) -> tuple[int, int]:
+def berlekamp_massey(data: list[int]) -> tuple[int, np.ndarray[int, dtype[int]]]:
     n = len(data)
     c_x, b_x = np.zeros(n, dtype=int), np.zeros(n, dtype=int)
     c_x[0], b_x[0] = 1, 1
     l, m, i = 0, -1, 0
     while i < n:
-        v = data[(i - l): i]
+        v = data[(i - l) : i]
         v = v[::-1]
-        cc = c_x[1: l + 1]
+        cc = c_x[1 : l + 1]
         delta = (data[i] + np.dot(v, cc)) % 2
         if delta == 1:
             temp = copy.copy(c_x)
