@@ -6,7 +6,9 @@ from base64 import b64encode
 
 KEYSIZE = AES.key_size
 BLOCKSIZE = 16  # AES.block_size
-SECRET_KEY = get_random_bytes(BLOCKSIZE)  # key doesn't matter, but must be of right size
+SECRET_KEY = get_random_bytes(
+    BLOCKSIZE
+)  # key doesn't matter, but must be of right size
 
 
 def main() -> None:
@@ -65,7 +67,7 @@ def padding_oracle(ciphertext: bytes) -> int:
 def blockify(text: bytes, blocksize: int = BLOCKSIZE) -> list[bytes]:
     blocks = []
     for i in range(0, len(text), blocksize):
-        blocks.append(text[i: i + blocksize])
+        blocks.append(text[i : i + blocksize])
     return blocks
 
 
