@@ -10,5 +10,3 @@
 * fibonacci.py
 * galois.py
 * berlekamp_massey.py
-* getkey.py
-
