@@ -1,3 +1,17 @@
+[tool.flake8]
+max-line-length = 88
+exclude = [
+    '.git',
+    '__pycache__',
+    'docs/source/conf.py',
+    'old',
+    'build',
+    'dist',
+    'venv'
+]
+max-complexity = 19
+extend-ignore = ['E203', 'W503', 'E241']
+
 [tool.mypy]
 python_version = "3.10"
 disallow_untyped_defs = true
@@ -5,7 +19,16 @@ show_error_codes = true
 no_implicit_optional = true
 warn_return_any = true
 warn_unused_ignores = true
-exclude = ["scripts", "docs", "test"]
+exclude = [
+
+    '.git',
+    '__pycache__',
+    'docs/source/conf.py',
+    'old',
+    'build',
+    'dist',
+    'venv'
+]
 plugins = [
     "numpy.typing.mypy_plugin"
 ]

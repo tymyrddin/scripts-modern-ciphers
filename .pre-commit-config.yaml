@@ -31,7 +31,7 @@ repos:
   - repo: https://github.com/PyCQA/flake8
     rev: 6.0.0
     hooks:
-      - id: flake8 # See .flake8 for args
+      - id: flake8  # See pyproject.toml for args
         additional_dependencies: &flake8-plugins
           - flake8-bugbear
           - flake8-builtins
