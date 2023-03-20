@@ -12,7 +12,7 @@ import prime_numbers
 def main() -> None:
     # Create a public/private keypair with 1024-bit keys:
     print("Making key files...")
-    create_key_files("al_sweigart", 1024)
+    create_key_files("named_keyfile", 1024)
     print("Key files made.")
 
 
@@ -20,14 +20,14 @@ def generate_key(keysize: int) -> tuple[tuple[int, int], tuple[int, int]]:
     # Creates a public/private keys keysize bits in size.
     p = 0
     q = 0
-    # Step 1: Create two prime numbers, p and q. Calculate n = p * q.
+    # Create two prime numbers, p and q. Calculate n = p * q.
     print("Generating p & q primes...")
     while p == q:
         p = prime_numbers.generate_large_prime(keysize)
         q = prime_numbers.generate_large_prime(keysize)
     n = p * q
 
-    # Step 2: Create a number e that is relatively prime to (p-1)*(q-1):
+    # Create a number e that is relatively prime to (p-1)*(q-1):
     print("Generating e that is relatively prime to (p-1)*(q-1)...")
     while True:
         # Keep trying random numbers for e until one is valid:
@@ -35,7 +35,7 @@ def generate_key(keysize: int) -> tuple[tuple[int, int], tuple[int, int]]:
         if cryptomath.gcd(e, (p - 1) * (q - 1)) == 1:
             break
 
-    # Step 3: Calculate d, the mod inverse of e:
+    # Calculate d, the mod inverse of e:
     print("Calculating d that is mod inverse of e...")
     d = cryptomath.find_mod_inverse(e, (p - 1) * (q - 1))
 
@@ -53,7 +53,7 @@ def create_key_files(name: str, key_size: int) -> None:
     # is the value in name) with the n,e and d,e integers written in
     # them, delimited by a comma.
 
-    # Our safety check will prevent us from overwriting our old key files:
+    # Safety check to prevent overwriting old key files:
     if os.path.exists("%s_pubkey.txt" % name) or os.path.exists(
         "%s_privkey.txt" % name
     ):

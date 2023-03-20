@@ -23,7 +23,7 @@ def main():
             " the free press the protection it must have to bare the secrets of"
             " government and inform the people. Hugo Black."
         )
-        public_key_filename = "al_sweigart_pubkey.txt"
+        public_key_filename = "named_keyfile_pubkey.txt"
         print("Encrypting and writing to %s..." % (filename))
         encrypted_text = encrypt_and_write_to_file(
             filename, public_key_filename, message
@@ -33,7 +33,7 @@ def main():
         print(encrypted_text)
 
     elif mode == "decrypt":
-        private_key_filename = "al_sweigart_privkey.txt"
+        private_key_filename = "named_keyfile_privkey.txt"
         print("Reading from %s and decrypting..." % (filename))
         decrypted_text = read_from_file_and_decrypt(filename, private_key_filename)
 
