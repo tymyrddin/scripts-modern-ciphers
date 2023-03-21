@@ -1,3 +1,6 @@
 rsarmageddon
 cryptography
 pycryptodomex
+tinyec
+pylfsr
+pwntools
